@@ -5,6 +5,8 @@
 ## It ensures there are no leftovers from previous installations
 NAMESPACE=runtime-alpha
 
+## the --no-hooks option is important, otherwise the runtime will be uninstalled from the Control Plane
+## and its "identity" will be reset, thus previous backups won't work.
 helm uninstall cf-gitops-runtime --namespace $NAMESPACE --no-hooks
 
 kubectl patch EventBus -n $NAMESPACE $(kubectl get eventbus -n $NAMESPACE -l codefresh.io/internal=true | awk 'NR>1{print $1}' | xargs) -p '{"metadata":{"finalizers":null}}' --type=merge
@@ -31,4 +33,7 @@ kubectl get crds -o json | jq -r '.items[] | select(.spec.group == "bitnami.com"
 
 kubectl delete ns ${NAMESPACE} 
 
-kubectl create ns ${NAMESPACE}
+kubectl create ns ${NAMESPACE} 
+
+
+
