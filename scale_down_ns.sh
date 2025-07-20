@@ -29,12 +29,12 @@ done
 # Wait for all background processes to complete
 wait
 
-# Remove finalizers from the EventBus before deleting it
-kubectl patch eventbus codefresh-eventbus -n "$NAMESPACE" \
-  --type=json -p='[{"op": "remove", "path": "/metadata/finalizers"}]' || true
+# # Remove finalizers from the EventBus before deleting it
+# kubectl patch eventbus codefresh-eventbus -n "$NAMESPACE" \
+#   --type=json -p='[{"op": "remove", "path": "/metadata/finalizers"}]' || true
 
-# Ignore the result of deleting the EventBus and properly detach it
-kubectl delete eventbus -n "$NAMESPACE" codefresh-eventbus --wait=false|| true
+# # Ignore the result of deleting the EventBus and properly detach it
+# kubectl delete eventbus -n "$NAMESPACE" codefresh-eventbus --wait=false|| true
 
-kubectl patch eventbus codefresh-eventbus -n "$NAMESPACE" \
-  --type=json -p='[{"op": "remove", "path": "/metadata/finalizers"}]' || true
+# kubectl patch eventbus codefresh-eventbus -n "$NAMESPACE" \
+#   --type=json -p='[{"op": "remove", "path": "/metadata/finalizers"}]' || true
